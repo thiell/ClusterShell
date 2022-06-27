@@ -225,3 +225,7 @@ class ClushConfig(configparser.ConfigParser, object):
         """max number of open files (soft rlimit)"""
         return self.getint("Main", "fd_max")
 
+    @property
+    def sudo_command(self):
+        """sudo_command value as a string (optional)"""
+        return self._get_optional("Main", "sudo_command")

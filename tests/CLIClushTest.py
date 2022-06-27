@@ -606,6 +606,30 @@ class CLIClushTest_A(unittest.TestCase):
                        "foo[1-10]", "echo ok"], b"",
                       b"---------------\nfoo[1-10]\n---------------\nok\n")
 
+    def test_040_sudo(self):
+        """test clush --sudo"""
+        def ask_pass_mock():
+            return "passok"
+        ask_pass_save = ClusterShell.CLI.Clush.ask_pass
+        ClusterShell.CLI.Clush.ask_pass = ask_pass_mock
+        try:
+            s = "%s: passok\n" % HOSTNAME
+            expected = s.encode()
+            # test 'sudo -S' password forwarding using 'tee' command instead
+            self._clush_t(["--sudo", "-O", "sudo_command=tee", "-w", HOSTNAME, ":"],
+                          None, expected)
+            self._clush_t(["--sudo","-O", "sudo_command=tee", "--nostdin", "-w", HOSTNAME, ":"],
+                          None, expected)
+            self._clush_t(["--sudo","-O", "sudo_command=tee", "--nostdin", "-w", HOSTNAME, ":"],
+                          b"test\n", expected)
+            # test sudo password forwarding followed by stdin stream
+            s = "%s: test stdin\n" % HOSTNAME
+            expected += s.encode()
+            self._clush_t(["-O", "sudo_command=tee", "-w", HOSTNAME, "--sudo", ":"],
+                          b"test stdin\n", expected)
+        finally:
+            ClusterShell.CLI.Clush.ask_pass = ask_pass_save
+
 
 class CLIClushTest_B_StdinFailure(unittest.TestCase):
     """Unit test class for testing CLI/Clush.py and stdin failure"""

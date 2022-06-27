@@ -33,12 +33,14 @@ When no command are specified, clush runs interactively.
 
 from __future__ import print_function
 
+import getpass
 import logging
 import os
 from os.path import abspath, dirname, exists, isdir, join
 import random
 import resource
 import signal
+import shlex
 import sys
 import time
 import threading
@@ -680,8 +682,16 @@ def run_command(task, cmd, ns, timeout, display, remote, trytree):
                         remote=remote, tree=trytree)
     if ns is None:
         worker.set_key('LOCAL')
+
+    sudo_passwd = task.default("USER_sudo_passwd")
+    if sudo_passwd:
+        worker.write(sudo_passwd.encode() + b'\n')
+
     if task.default("USER_stdin_worker"):
         bind_stdin(worker, display)
+    elif sudo_passwd:
+        # sudo passwd is the only thing we forward
+        worker.set_write_eof()
 
     task.resume()
 
@@ -744,6 +754,10 @@ def set_fdlimit(fd_max, display):
             msgfmt = 'Warning: Failed to set max open files limit to %d (%s)'
             display.vprint_err(VERB_VERB, msgfmt % (rlim_max, exc))
 
+def ask_pass():
+    """Prompt for password (--sudo)"""
+    return getpass.getpass()
+
 def clush_exit(status, task=None):
     """Exit script, flushing stdio buffers and stopping ClusterShell task."""
     if task:
@@ -798,6 +812,8 @@ def main():
 
     parser.add_option("-n", "--nostdin", action="store_true", dest="nostdin",
                       help="don't watch for possible input from stdin")
+    parser.add_option("--sudo", action="store_true", dest="sudo",
+                      help="enable sudo password prompt")
 
     parser.install_groupsconf_option()
     parser.install_clush_config_options()
@@ -955,12 +971,14 @@ def main():
             os.tcgetpgrp(sys.stdout.fileno()) == os.getpgrp()
         user_interaction |= stdin_isafgtty and stdout_isafgtty
     display.vprint(VERB_DEBUG, "User interaction: %s" % user_interaction)
+
     if user_interaction:
         # Standard input is a terminal and we want to perform some user
         # interactions in the main thread (using blocking calls), so
         # we run cluster commands in a new ClusterShell Task (a new
         # thread is created).
         task = Task()
+
     # else: perform everything in the main thread
 
     # Handle special signal only when user_interaction is set
@@ -976,6 +994,16 @@ def main():
 
     task.set_info("debug", config.verbosity >= VERB_DEBUG)
     task.set_info("fanout", config.fanout)
+
+    if options.sudo:
+        if config.sudo_command is None:
+            sudo_cmd = 'sudo -S -p "\'\'"'
+        else:
+            sudo_cmd = config.sudo_command
+        sudo_cmdl = shlex.split(sudo_cmd)
+        display.vprint(VERB_DEBUG, "sudo command prefix: %s" % sudo_cmdl)
+        args = sudo_cmdl + args
+        task.set_default("USER_sudo_passwd", ask_pass())
 
     if options.worker:
         try:
