@@ -3,6 +3,25 @@
 Release Notes
 =============
 
+Version 1.9
+-----------
+
+Main changes in 1.9
+^^^^^^^^^^^^^^^^^^^
+
+For more details, please have a look at `GitHub Issues for 1.9 milestone`_.
+
+.. warning:: To support mixed-length 0-padding ranges, version 1.9 introduces
+   changes in :class:`.RangeSet`'s API that might break existing code. If you
+   use :class:`.RangeSet` directly, see below for more information.
+
+.. note:: :class:`.NodeSet` users: the :class:`.NodeSet` class API has NOT
+   changed so as long as you do not use :class:`.RangeSet` directly, you can
+   safely upgrade to 1.9.
+
+
+
+
 Version 1.8
 -----------
 
@@ -588,6 +607,7 @@ Please see :ref:`install-pip-user`.
 .. _GitHub Issues for 1.8.2 milestone: https://github.com/cea-hpc/clustershell/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A1.8.2
 .. _GitHub Issues for 1.8.3 milestone: https://github.com/cea-hpc/clustershell/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A1.8.3
 .. _GitHub Issues for 1.8.4 milestone: https://github.com/cea-hpc/clustershell/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A1.8.4
+.. _GitHub Issues for 1.9 milestone: https://github.com/cea-hpc/clustershell/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A1.9
 .. _LGPL v2.1+: https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html
 .. _CeCILL-C V1: http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.html
 .. _xCAT: https://xcat.org/

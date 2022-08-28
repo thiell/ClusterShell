@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH CLUSH.CONF 5 "2022-06-29" "1.8.4" "ClusterShell User Manual"
+.TH CLUSH.CONF 5 "2022-08-27" "1.9" "ClusterShell User Manual"
 .SH NAME
 clush.conf \- Configuration file for clush
 .
@@ -44,7 +44,8 @@ user configuration file (\fI$XDG_CONFIG_HOME/clustershell/clush.conf\fP)
 .IP 3. 3
 local pip user installation (\fI$HOME/.local/etc/clustershell/clush.conf\fP)
 .IP 4. 3
-system\-wide configuration file (\fI/etc/clustershell/clush.conf\fP)
+global configuration file (\fI$CLUSTERSHELL_CFGDIR/clush.conf\fP, defaults to
+\fI/etc/clustershell/clush.conf\fP)
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -163,8 +164,9 @@ node_count: yes
 .SH FILES
 .INDENT 0.0
 .TP
-.B \fI/etc/clustershell/clush.conf\fP
-System\-wide clush configuration file.
+.B \fI$CLUSTERSHELL_CFGDIR/clush.conf\fP
+Global clush configuration file. If $CLUSTERSHELL_CFGDIR is not defined,
+\fI/etc/slutershell/clush.conf\fP is used instead.
 .TP
 .B \fI$XDG_CONFIG_HOME/clustershell/clush.conf\fP
 User configuration file for clush. If $XDG_CONFIG_HOME is not defined,

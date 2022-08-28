@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH CLUSH 1 "2022-06-29" "1.8.4" "ClusterShell User Manual"
+.TH CLUSH 1 "2022-08-27" "1.9" "ClusterShell User Manual"
 .SH NAME
 clush \- execute shell commands on a cluster
 .
@@ -384,8 +384,9 @@ Copy \fI/etc/motd\fP from remote nodes node[3\-5,62] to local \fI/tmp\fP directo
 .SH FILES
 .INDENT 0.0
 .TP
-.B \fI/etc/clustershell/clush.conf\fP
-System\-wide clush configuration file.
+.B \fI$CLUSTERSHELL_CFGDIR/clush.conf\fP
+Global clush configuration file. If $CLUSTERSHELL_CFGDIR is not defined,
+\fI/etc/clustershell/clush.conf\fP is used instead.
 .TP
 .B \fI$XDG_CONFIG_HOME/clustershell/clush.conf\fP
 User configuration file for clush. If $XDG_CONFIG_HOME is not defined,
