@@ -562,6 +562,7 @@ class Task(object):
 
         The following optional parameters are passed to the underlying local
         or remote Worker constructor:
+
         - handler: EventHandler instance to notify (on event) -- default is
         no handler (None)
         - timeout: command timeout delay expressed in second using a floating
