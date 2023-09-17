@@ -1209,8 +1209,8 @@ class Task(object):
         """
         Get max return code encountered during last run or None in the
         following cases:
-        - all commands timed out,
-        - no command-based worker was executed.
+            - all commands timed out,
+            - no command-based worker was executed.
 
         How do retcodes work? If the process exits normally, the return
         code is its exit status. If the process is terminated by a
