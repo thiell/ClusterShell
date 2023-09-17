@@ -563,16 +563,16 @@ class Task(object):
         The following optional parameters are passed to the underlying local
         or remote Worker constructor:
 
-        - handler: EventHandler instance to notify (on event) -- default is
-        no handler (None)
-        - timeout: command timeout delay expressed in second using a floating
-        point value -- default is unlimited (None)
-        - autoclose: if set to True, the underlying Worker is automatically
-        aborted as soon as all other non-autoclosing task objects (workers,
-        ports, timers) have finished -- default is False
-        - stderr: separate stdout/stderr if set to True -- default is False.
-        - stdin: enable stdin if set to True or prevent its use otherwise --
-        default is True.
+          - handler: EventHandler instance to notify (on event) -- default is
+            no handler (None)
+          - timeout: command timeout delay expressed in second using a floating
+            point value -- default is unlimited (None)
+          - autoclose: if set to True, the underlying Worker is automatically
+            aborted as soon as all other non-autoclosing task objects (workers,
+            ports, timers) have finished -- default is False
+          - stderr: separate stdout/stderr if set to True -- default is False.
+          - stdin: enable stdin if set to True or prevent its use otherwise --
+            default is True.
 
         Local usage:
             task.shell(command [, key=key] [, handler=handler]
