@@ -144,6 +144,7 @@ class Task(object):
     the task associated thread):
 
         >>> task.resume()
+
     or:
 
         >>> task.run()
@@ -478,8 +479,7 @@ class Task(object):
           - "worker": Worker-based class used when spawning workers through
             shell()/run().
 
-        Threading considerations
-        ========================
+        Threading considerations:
           Unlike set_info(), when called from the task's thread or
           not, set_default() immediately updates the underlying
           dictionary in a thread-safe manner. This method doesn't
@@ -535,8 +535,7 @@ class Task(object):
           - "tree_default:<key>": In tree mode, overrides the key <key>
             in Defaults (settings normally set in defaults.conf)
 
-        Threading considerations
-        ========================
+        Threading considerations:
           Unlike set_default(), the underlying info dictionary is only
           modified from the task's thread. So calling set_info() from
           another thread leads to queueing the request for late apply
@@ -559,16 +558,16 @@ class Task(object):
 
         The following optional parameters are passed to the underlying local
         or remote Worker constructor:
-          - handler: EventHandler instance to notify (on event) -- default is
-            no handler (None)
-          - timeout: command timeout delay expressed in second using a floating
-            point value -- default is unlimited (None)
-          - autoclose: if set to True, the underlying Worker is automatically
-            aborted as soon as all other non-autoclosing task objects (workers,
-            ports, timers) have finished -- default is False
-          - stderr: separate stdout/stderr if set to True -- default is False.
-          - stdin: enable stdin if set to True or prevent its use otherwise --
-            default is True.
+        - handler: EventHandler instance to notify (on event) -- default is
+        no handler (None)
+        - timeout: command timeout delay expressed in second using a floating
+        point value -- default is unlimited (None)
+        - autoclose: if set to True, the underlying Worker is automatically
+        aborted as soon as all other non-autoclosing task objects (workers,
+        ports, timers) have finished -- default is False
+        - stderr: separate stdout/stderr if set to True -- default is False.
+        - stdin: enable stdin if set to True or prevent its use otherwise --
+        default is True.
 
         Local usage::
             task.shell(command [, key=key] [, handler=handler]
@@ -713,21 +712,21 @@ class Task(object):
     def timer(self, fire, handler, interval=-1.0, autoclose=False):
         """
         Create a timer bound to this task that fires at a preset time
-        in the future by invoking the ev_timer() method of `handler'
+        in the future by invoking the ev_timer() method of *handler*
         (provided EventHandler object). Timers can fire either only
         once or repeatedly at fixed time intervals. Repeating timers
         can also have their next firing time manually adjusted.
 
-        The mandatory parameter `fire' sets the firing delay in seconds.
+        The mandatory parameter *fire* sets the firing delay in seconds.
 
-        The optional parameter `interval' sets the firing interval of
+        The optional parameter *interval* sets the firing interval of
         the timer. If not specified, the timer fires once and then is
         automatically invalidated.
 
         Time values are expressed in second using floating point
         values. Precision is implementation (and system) dependent.
 
-        The optional parameter `autoclose', if set to True, creates
+        The optional parameter *autoclose*, if set to True, creates
         an "autoclosing" timer: it will be automatically invalidated
         as soon as all other non-autoclosing task's objects (workers,
         ports, timers) have finished. Default value is False, which
@@ -1213,11 +1212,9 @@ class Task(object):
                 - all commands timed out,
                 - no command-based worker was executed.
 
-        How retcodes work
-        =================
-          If the process exits normally, the return code is its exit
-          status. If the process is terminated by a signal, the return
-          code is 128 + signal number.
+        How do retcodes work? If the process exits normally, the return
+        code is its exit status. If the process is terminated by a
+        signal, the return code is 128 + signal number.
         """
         return self._max_rc
 
@@ -1261,13 +1258,11 @@ class Task(object):
         Iterate over return codes of command-based workers, returns a
         tuple (rc, keys).
 
-        Optional parameter match_keys add filtering on these keys.
+        Optional parameter *match_keys* add filtering on these keys.
 
-        How retcodes work
-        =================
-          If the process exits normally, the return code is its exit
-          status. If the process is terminated by a signal, the return
-          code is 128 + signal number.
+        How do retcodes work? If the process exits normally, the return
+        code is its exit status. If the process is terminated by a
+        signal, the return code is 128 + signal number.
         """
         if match_keys:
             # Use the items iterator for the underlying dict.

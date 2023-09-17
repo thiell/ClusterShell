@@ -111,7 +111,7 @@ html_theme = 'sphinx_rtd_theme'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = 'clustershell-nautilus-logo200.png'
+html_logo = '_static/clustershell-nautilus-logo200.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -124,8 +124,9 @@ html_logo = 'clustershell-nautilus-logo200.png'
 html_static_path = ['_static']
 
 def setup(app):
-    # RTD does not line wrap CSV tables, so we override this behavior.
-    app.add_stylesheet("theme_overrides.css")
+    if os.environ.get('READTHEDOCS'):
+        # RTD does not line wrap CSV tables, so we override this behavior.
+        app.add_stylesheet("theme_overrides.css")
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
