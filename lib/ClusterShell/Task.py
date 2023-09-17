@@ -464,6 +464,7 @@ class Task(object):
         using this method and retrieve them with default().
 
         Task default_keys are:
+
           - "stderr": Boolean value indicating whether to enable
             stdout/stderr separation when using task.shell(), if not
             specified explicitly (default: False).
@@ -480,6 +481,7 @@ class Task(object):
             shell()/run().
 
         Threading considerations:
+
           Unlike set_info(), when called from the task's thread or
           not, set_default() immediately updates the underlying
           dictionary in a thread-safe manner. This method doesn't
@@ -517,6 +519,7 @@ class Task(object):
             >>> task.set_info('debug', True)
 
         Task info_keys are:
+
           - "debug": Boolean value indicating whether to enable library
             debugging messages (default: False).
           - "print_debug": Debug messages processing function. This
@@ -536,6 +539,7 @@ class Task(object):
             in Defaults (settings normally set in defaults.conf)
 
         Threading considerations:
+
           Unlike set_default(), the underlying info dictionary is only
           modified from the task's thread. So calling set_info() from
           another thread leads to queueing the request for late apply
