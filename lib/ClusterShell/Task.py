@@ -573,16 +573,16 @@ class Task(object):
         - stdin: enable stdin if set to True or prevent its use otherwise --
         default is True.
 
-        Local usage::
+        Local usage:
             task.shell(command [, key=key] [, handler=handler]
-                  [, timeout=secs] [, autoclose=enable_autoclose]
-                  [, stderr=enable_stderr][, stdin=enable_stdin]))
+            [, timeout=secs] [, autoclose=enable_autoclose]
+            [, stderr=enable_stderr][, stdin=enable_stdin]))
 
-        Distant usage::
+        Distant usage:
             task.shell(command, nodes=nodeset [, handler=handler]
-                  [, timeout=secs], [, autoclose=enable_autoclose]
-                  [, tree=None|False|True] [, remote=False|True]
-                  [, stderr=enable_stderr][, stdin=enable_stdin]))
+            [, timeout=secs], [, autoclose=enable_autoclose]
+            [, tree=None|False|True] [, remote=False|True]
+            [, stderr=enable_stderr][, stdin=enable_stdin]))
 
         Example:
 
