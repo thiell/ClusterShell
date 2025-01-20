@@ -271,7 +271,7 @@ def nodeset():
         for src in group_resolver.sources():
             print("@%s:" % src)
         # then list groups in group source (similar to list)
-        command_list(options, xset, group_resolver)
+        command_list(options, None, group_resolver)
         # then list nodes from the groups passed as argument, if any
         if not xset:
             return
